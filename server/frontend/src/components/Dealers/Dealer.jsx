@@ -1,12 +1,12 @@
-import React, { useState,useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import "./Dealers.css";
+import negative_icon from "../assets/negative.png";
+import neutral_icon from "../assets/neutral.png";
+import positive_icon from "../assets/positive.png";
+import review_icon from "../assets/reviewbutton.png";
 import "../assets/style.css";
-import positive_icon from "../assets/positive.png"
-import neutral_icon from "../assets/neutral.png"
-import negative_icon from "../assets/negative.png"
-import review_icon from "../assets/reviewbutton.png"
 import Header from '../Header/Header';
+import "./Dealers.css";
 
 const Dealer = () => {
 
@@ -23,16 +23,18 @@ const Dealer = () => {
   let dealer_url = root_url+`djangoapp/dealer/${id}`;
   let reviews_url = root_url+`djangoapp/reviews/dealer/${id}`;
   let post_review = root_url+`postreview/${id}`;
-  
+
   const get_dealer = async ()=>{
     const res = await fetch(dealer_url, {
       method: "GET"
     });
     const retobj = await res.json();
-    
+
     if(retobj.status === 200) {
       let dealerobjs = Array.from(retobj.dealer)
       setDealer(dealerobjs[0])
+      console.log(dealerobjs[0]);
+      console.log(dealerobjs);
     }
   }
 
@@ -41,7 +43,7 @@ const Dealer = () => {
       method: "GET"
     });
     const retobj = await res.json();
-    
+
     if(retobj.status === 200) {
       if(retobj.reviews.length > 0){
         setReviews(retobj.reviews)
@@ -61,10 +63,8 @@ const Dealer = () => {
     get_reviews();
     if(sessionStorage.getItem("username")) {
       setPostReview(<a href={post_review}><img src={review_icon} style={{width:'10%',marginLeft:'10px',marginTop:'10px'}} alt='Post Review'/></a>)
-
-      
     }
-  },[]);  
+  },[]);
 
 
 return(
@@ -85,7 +85,7 @@ return(
           <div className="reviewer">{review.name} {review.car_make} {review.car_model} {review.car_year}</div>
         </div>
       ))}
-    </div>  
+    </div>
   </div>
 )
 }
