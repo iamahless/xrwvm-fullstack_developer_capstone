@@ -2,7 +2,6 @@ import json
 import logging
 
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -118,7 +117,7 @@ def get_dealer_reviews(request, dealer_id):
 
 # Create a `add_review` view to submit a review
 def add_review(request):
-    if (request.user.is_anonymous == False):
+    if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
             post_review(data)

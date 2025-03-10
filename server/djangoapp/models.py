@@ -27,4 +27,5 @@ class CarModel(models.Model):
         max_digits=10, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
-        return f"CarModel(name='{self.name}', car_type='{self.type}', year={self.year}, make='{self.car_make.name}')"
+        return f"CarModel(name='{self.name}', car_type='{self.type}',"
+        f"year={self.year}, make='{self.car_make.name}')"
